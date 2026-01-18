@@ -1,26 +1,71 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Enforcing Light Mode Variables */
+  --background: #FFFFFF;
+  --foreground: #141414;
+  --primary: #B08463;
+  --secondary: #714329;
+  --accent: #B9937B;
+  --soft: #D0B9A7;
+  --input: #E5E5E5;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --color-accent: var(--accent);
+  --color-soft: var(--soft);
+  --color-input: var(--input);
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --font-sans: var(--font-outfit), sans-serif;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+}
+
+@layer utilities {
+  .container {
+    @apply max-w-6xl mx-auto px-4;
+  }
+}
+
+/* UI Cursor Fixes - Final Hard Enforcement */
+/* Targets every single clickable element explicitly */
+a,
+button,
+[role="button"],
+input[type="submit"],
+input[type="button"],
+input[type="reset"] {
+  cursor: pointer !important;
+}
+
+/* Specific component overrides to ensure pointer works */
+.cursor-pointer {
+  cursor: pointer !important;
+}
+
+/* Enforce text cursor on inputs */
+input,
+textarea,
+input:not([type]),
+/* default inputs */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="search"] {
+  cursor: text !important;
+}
+
+/* Exception: Buttons inside forms should still be pointers */
+input[type="submit"],
+input[type="button"] {
+  cursor: pointer !important;
 }
