@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
-import { Mail, Phone, MapPin, Calendar, Clock, Briefcase } from "lucide-react";
+import { Mail, Phone, MapPin, Calendar, Briefcase, Tent } from "lucide-react";
 
 export function Hero() {
     const profile = {
@@ -11,18 +11,19 @@ export function Hero() {
         birth: "95년생 (31)",
         address: "경기도 고양시 덕양구",
         phone: "010-3641-2532",
-        email: "wjdwls8520@gmail.com"
+        email: "wjdwls8520@gmail.com",
+        hobby: "캠핑, EPL 시청"
     };
 
     return (
         <section id="hero" className="flex min-h-[80vh] flex-col justify-center py-20 bg-white">
             <div className="container max-w-5xl px-4 md:px-6">
-                <div className="flex flex-col md:flex-row gap-12 md:gap-20 items-center justify-center">
+                <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 items-center justify-center">
 
                     {/* Profile Image - Brunch Style (Clean & Soft) */}
                     <div className="relative group shrink-0">
                         <div className="absolute -inset-4 rounded-[2.5rem] bg-gradient-to-tr from-gray-50 to-gray-100 opacity-60 blur-2xl group-hover:opacity-100 transition-opacity duration-700"></div>
-                        <div className="relative h-72 w-72 md:h-96 md:w-96 overflow-hidden rounded-[2rem] shadow-2xl ring-1 ring-gray-100 rotate-2 hover:rotate-0 transition-transform duration-500 ease-out">
+                        <div className="relative h-72 w-72 lg:h-96 lg:w-96 overflow-hidden rounded-[2rem] shadow-2xl ring-1 ring-gray-100 rotate-2 hover:rotate-0 transition-transform duration-500 ease-out">
                             <Image
                                 src="/images/profile-image.jpg"
                                 alt="프로필 사진"
@@ -35,7 +36,7 @@ export function Hero() {
                     </div>
 
                     {/* Profile Info */}
-                    <div className="flex flex-col space-y-8 max-w-xl text-center md:text-left animate-in fade-in slide-in-from-bottom-8 duration-700 delay-200">
+                    <div className="flex flex-col space-y-8 max-w-xl text-center lg:text-left animate-in fade-in slide-in-from-bottom-8 duration-700 delay-200">
                         <div className="space-y-4">
                             <span className="inline-block rounded-full bg-primary/10 px-4 py-1.5 text-sm font-bold text-primary tracking-wide">
                                 {profile.role}
@@ -66,14 +67,21 @@ export function Hero() {
                                 <Phone className="h-4 w-4 text-primary shrink-0" />
                                 <span className="text-sm font-medium">{profile.phone}</span>
                             </div>
-                            <div className="flex items-center gap-3 text-gray-600 sm:col-span-2">
+                            <div className="flex items-center gap-3 text-gray-600">
                                 <Mail className="h-4 w-4 text-primary shrink-0" />
                                 <span className="text-sm font-medium">{profile.email}</span>
+                            </div>
+                            <div className="flex items-center gap-3 text-gray-600">
+                                <Tent className="h-4 w-4 text-primary shrink-0" />
+                                <span className="text-sm font-medium text-gray-800">
+                                    <span className="font-bold text-gray-500 mr-2">취미:</span>
+                                    {profile.hobby}
+                                </span>
                             </div>
                         </div>
 
                         {/* Actions */}
-                        <div className="flex gap-4 justify-center md:justify-start pt-2">
+                        <div className="flex gap-4 justify-center lg:justify-start pt-2">
                             <Link href="#portfolio" className="rounded-full bg-gray-900 px-8 py-3.5 text-sm font-bold text-white shadow-lg hover:bg-black hover:-translate-y-1 transition-all">
                                 프로젝트 보기
                             </Link>

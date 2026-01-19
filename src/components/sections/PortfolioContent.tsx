@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 
 export type Category = "Frontend" | "Backend (Fullstack)";
 
@@ -15,14 +16,13 @@ export interface ProjectItem {
     url?: string;
     thumbnail?: string;
     pdf?: string;
+    isNew?: boolean;
     commentSection: React.ReactNode;
 }
 
 interface PortfolioContentProps {
     projects: ProjectItem[];
 }
-
-import Image from "next/image";
 
 const TABS: Category[] = ["Backend (Fullstack)", "Frontend"];
 
@@ -61,66 +61,7 @@ export function PortfolioContent({ projects }: PortfolioContentProps) {
 
                 <div className="grid gap-12 max-w-4xl mx-auto min-h-[500px]">
                     {filteredProjects.map((project) => (
-                        <article key={project.id} className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow duration-300 animate-in fade-in slide-in-from-bottom-4">
-                            <div className="h-72 bg-gray-100 relative group overflow-hidden">
-                                {project.thumbnail ? (
-                                    <Image
-                                        src={project.thumbnail}
-                                        alt={project.title}
-                                        fill
-                                        className="object-cover transition-transform duration-500 group-hover:scale-105"
-                                    />
-                                ) : (
-                                    <div className="flex items-center justify-center h-full text-gray-400">
-                                        Project Image ({project.title})
-                                    </div>
-                                )}
-                            </div>
-                            <div className="p-8 md:p-10">
-                                <div className="flex flex-col md:flex-row md:items-center justify-between mb-6 gap-4">
-                                    <h3 className="text-2xl font-bold text-gray-900">{project.title}</h3>
-                                    <div className="flex flex-wrap items-center gap-2 md:gap-3">
-                                        <span className="px-3 py-1 bg-soft/20 text-secondary text-xs font-bold rounded-full uppercase tracking-wide whitespace-nowrap">{project.tag}</span>
-
-                                        {/* Website Button */}
-                                        {project.url && (
-                                            <a
-                                                href={project.url}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className="px-4 py-1.5 bg-gray-900 text-white text-xs font-bold rounded-full hover:bg-black transition-colors flex items-center gap-1 whitespace-nowrap"
-                                            >
-                                                Visit Website
-                                                <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
-                                            </a>
-                                        )}
-
-                                        {/* PDF Button */}
-                                        {project.pdf && (
-                                            <a
-                                                href={project.pdf}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className="px-4 py-1.5 border border-primary text-primary hover:bg-primary hover:text-white text-xs font-bold rounded-full transition-colors flex items-center gap-1 whitespace-nowrap"
-                                            >
-                                                View PDF
-                                                <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
-                                            </a>
-                                        )}
-                                    </div>
-                                </div>
-                                <p className="text-gray-600 leading-relaxed mb-8 border-b border-gray-100 pb-8">
-                                    {project.description}
-                                </p>
-
-                                <h4 className="flex items-center gap-2 text-sm font-bold text-gray-400 mb-6 uppercase tracking-wider">
-                                    <span className="w-2 h-2 rounded-full bg-accent"></span>
-                                    Guestbook
-                                </h4>
-                                {/* Render the slot passed from Server */}
-                                {project.commentSection}
-                            </div>
-                        </article>
+                        <ProjectCard key={project.id} project={project} />
                     ))}
 
                     {filteredProjects.length === 0 && (
@@ -156,5 +97,103 @@ export function PortfolioContent({ projects }: PortfolioContentProps) {
                 </div>
             </div>
         </section>
+    );
+}
+
+function ProjectCard({ project }: { project: ProjectItem }) {
+    const [isLoading, setIsLoading] = useState(true);
+
+    return (
+        <article className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow duration-300 animate-in fade-in slide-in-from-bottom-4 relative">
+            {/* New Badge - Cute & Soft Design */}
+            {project.isNew && (
+                <div className="absolute top-5 left-5 z-20">
+                    <span className="relative flex items-center gap-2 px-4 py-2 rounded-full bg-white/90 backdrop-blur-md shadow-sm border border-white/50 transition-transform duration-500 hover:scale-105 group-hover:-rotate-6">
+                        <span className="relative flex h-2.5 w-2.5">
+                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                            <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-primary"></span>
+                        </span>
+                        <span className="font-sans font-bold text-sm text-gray-700 lowercase tracking-tight relative -top-[1px]">
+                            new
+                        </span>
+                    </span>
+                </div>
+            )}
+
+            <div className="h-72 bg-gray-100 relative group overflow-hidden flex items-center justify-center">
+                {project.thumbnail ? (
+                    <>
+                        {isLoading && (
+                            <div className="absolute inset-0 flex items-center justify-center bg-gray-100 z-10 transition-opacity duration-300">
+                                <div className="flex flex-col items-center gap-3">
+                                    <div className="w-8 h-8 border-4 border-primary/20 border-t-primary rounded-full animate-spin"></div>
+                                    <span className="text-sm font-medium text-gray-500 animate-pulse">
+                                        이미지 로딩중입니다...
+                                    </span>
+                                </div>
+                            </div>
+                        )}
+                        <Image
+                            src={project.thumbnail}
+                            alt={project.title}
+                            fill
+                            className={cn(
+                                "object-cover transition-all duration-700 group-hover:scale-105",
+                                isLoading ? "opacity-0 blur-sm" : "opacity-100 blur-0"
+                            )}
+                            onLoad={() => setIsLoading(false)}
+                        />
+                    </>
+                ) : (
+                    <div className="flex items-center justify-center h-full text-gray-400">
+                        Project Image ({project.title})
+                    </div>
+                )}
+            </div>
+            <div className="p-8 md:p-10">
+                <div className="flex flex-col md:flex-row md:items-center justify-between mb-6 gap-4">
+                    <h3 className="text-2xl font-bold text-gray-900">{project.title}</h3>
+                    <div className="flex flex-wrap items-center gap-2 md:gap-3">
+                        <span className="px-3 py-1 bg-soft/20 text-secondary text-xs font-bold rounded-full uppercase tracking-wide whitespace-nowrap">{project.tag}</span>
+
+                        {/* Website Button */}
+                        {project.url && (
+                            <a
+                                href={project.url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="px-4 py-1.5 bg-gray-900 text-white text-xs font-bold rounded-full hover:bg-black transition-colors flex items-center gap-1 whitespace-nowrap"
+                            >
+                                Visit Website
+                                <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                            </a>
+                        )}
+
+                        {/* PDF Button */}
+                        {project.pdf && (
+                            <a
+                                href={project.pdf}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="px-4 py-1.5 border border-primary text-primary hover:bg-primary hover:text-white text-xs font-bold rounded-full transition-colors flex items-center gap-1 whitespace-nowrap"
+                            >
+                                View PDF
+                                <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                            </a>
+                        )}
+                    </div>
+                </div>
+                <p className="text-gray-600 leading-relaxed mb-8 border-b border-gray-100 pb-8">
+                    {project.description}
+                </p>
+
+                <h4 className="flex items-center gap-2 text-sm font-bold text-gray-400 mb-6 uppercase tracking-wider">
+                    <span className="w-2 h-2 rounded-full bg-accent"></span>
+                    Guestbook
+                </h4>
+                {/* Render the slot passed from Server */}
+                {project.commentSection}
+            </div>
+        </article>
     );
 }

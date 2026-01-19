@@ -12,6 +12,7 @@ export function Portfolio() {
             thumbnail: "/images/pine-thumb.png",
             description: "k-문화를 알리는 커뮤니티 사이트. JSP와 Spring Boot, MYSQL을 활용하여 구현했습니다.",
             url: "http://3.35.102.140.nip.io:8070/", // Add your URL here
+            isNew: true,
             commentSection: <CommentList projectSlug="pine" />
         },
         {
@@ -24,6 +25,7 @@ export function Portfolio() {
             description: "'짐을 비우다.' 중고거래 플랫폼을 구현했습니다. Spring Boot와 React, MYSQL, Postgresql을 활용하여 구현했으며, ec2 docker를 활용하여 배포했습니다. 또한 웹소켓을 활용한 채팅기능을 추가하여 실시간 거래와 GPT 토큰을 활용한 챗봇기능을 제공합니다.",
             url: "http://3.38.18.208/", // Add your URL here
             pdf: "/중고거래플랫폼_JIMBIM.pdf",
+            isNew: true,
             commentSection: <CommentList projectSlug="Jimbim" />
         },
         {
@@ -35,6 +37,7 @@ export function Portfolio() {
             thumbnail: "/images/xrhub-thumb.png",
             description: "내가 원하는대로 직접 만드는 메타버스 vr 가상전시관.",
             url: "https://www.xrhub.co.kr/index.html", // Add your URL here
+            isNew: true,
             commentSection: <CommentList projectSlug="XRhub" />
         },
         {

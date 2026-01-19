@@ -18,14 +18,14 @@ export async function Header() {
                     <img src="/logo.jpg" alt="readme.jj Logo" className="h-8 w-auto rounded-md shadow-sm group-hover:rotate-3 transition-transform duration-300" />
                 </Link>
                 <nav className="hidden md:flex items-center gap-8 text-sm font-medium">
+                    <Link href="#hero" className="text-gray-600 hover:text-primary transition-colors">
+                        About
+                    </Link>
                     <Link href="#portfolio" className="text-gray-600 hover:text-primary transition-colors">
                         Portfolio
                     </Link>
                     <Link href="#resume" className="text-gray-600 hover:text-primary transition-colors">
                         Resume
-                    </Link>
-                    <Link href="#contact" className="text-gray-600 hover:text-primary transition-colors">
-                        Contact
                     </Link>
                     {isAdmin && <LogoutButton />}
                 </nav>
