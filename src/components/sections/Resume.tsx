@@ -11,7 +11,7 @@ export function Resume() {
                 <div className="glass-panel p-12 rounded-3xl border border-white/20 shadow-xl backdrop-blur-md bg-white/30 hover:bg-white/40 transition-colors duration-500">
                     <h2 className="text-3xl font-bold mb-6 text-gray-900 font-serif">Resume</h2>
                     <p className="mb-10 text-gray-800 text-lg max-w-2xl mx-auto font-medium">
-                        감각적인 디지털 경험을 통해 저의 여정과 기술을 탐험해보세요.
+                        단순한 이력을 넘어, 치열했던 고민과 성장의 기록을 만나보세요.
                         <br />
                         <span className="text-sm font-normal text-gray-600 mt-2 block">
                             (마우스를 움직여 배경의 3D 오브젝트와 상호작용해보세요)
