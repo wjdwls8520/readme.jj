@@ -11,9 +11,11 @@ export async function Header() {
     return (
         <header className="sticky top-0 z-50 w-full bg-white/90 backdrop-blur-sm border-b border-gray-100 transition-all">
             <div className="container flex h-16 items-center justify-between">
-                <Link href="/" className="flex items-center gap-3">
-                    <img src="/logo.jpg" alt="readme.jj Logo" className="h-10 w-auto rounded-md shadow-sm" />
-                    {/* <span className="font-serif text-2xl font-bold tracking-tight text-primary">readme.jj</span> */}
+                <Link href="/" className="flex items-center gap-2 group">
+                    <span className="font-sans text-xl font-bold tracking-tight text-gray-600 group-hover:text-primary transition-colors">
+                        README.
+                    </span>
+                    <img src="/logo.jpg" alt="readme.jj Logo" className="h-8 w-auto rounded-md shadow-sm group-hover:rotate-3 transition-transform duration-300" />
                 </Link>
                 <nav className="hidden md:flex items-center gap-8 text-sm font-medium">
                     <Link href="#portfolio" className="text-gray-600 hover:text-primary transition-colors">

@@ -26,6 +26,14 @@ export async function postComment(formData: FormData) {
     const projectSlug = formData.get("project_slug") as string;
     const parentId = formData.get("parent_id") as string | null;
 
+    // 0. Server-side Validation
+    if (finalNickname.length > 10) {
+        return { error: "닉네임은 최대 10자까지 가능합니다." };
+    }
+    if (content.length > 300) {
+        return { error: "댓글 내용은 최대 300자까지 가능합니다." };
+    }
+
     // 1. Nickname Blacklist Logic
     const BLACKLIST = ["개발자 김정진", "어드민", "admin", "김정진", "정진"];
     if (!isAdmin && BLACKLIST.includes(nickname)) {
@@ -41,21 +49,23 @@ export async function postComment(formData: FormData) {
         return { error: "Missing required fields" };
     }
 
-    // Check for existing nickname (skip for admin if they want to reuse their own name, or enforce uniqueness even for admin?)
-    // User asked for "개발자 김정진" for admin. Uniqueness should probably still apply if someone else somehow took it, 
-    // but the blacklist prevents others from taking it. So we are safe.
-    // However, if admin posts multiple times, they need to be able to use the same nickname?
-    // The current Uniqueness check uses .maybeSingle(). 
-    // If strict uniqueness is required for EVERYONE, admin can only post ONCE. 
-    // User request: "이미 db에 같은 닉네임이 있다면 작성하지 못하게해줘".
-    // BUT Admin needs to reply multiple times. 
-    // Exception: Admin's nickname "개발자 김정진" should NOT be subject to uniqueness check? Or maybe "개발자 김정진" is a special badge?
-    // Actually, widespread pattern is: Nicknames are unique per USER (session), or just unique string?
-    // If unique string, then Admin can only post once. That's bad.
-    // Let's assume Admin is exempt from Uniqueness check OR "개발자 김정진" is a special system name that doesn't trigger the check?
-    // Wait, the user said "닉네임을 입력하는데 이미 db에 같은 닉네임이 있다면 작성하지 못하게해줘". 
-    // If Admin is force-set to "개발자 김정진", and that name exists, Admin is blocked? 
-    // Let's exempt Admin from uniqueness check.
+    // Rate Limiting (Flood Protection)
+    // Prevent more than 3 comments in last 2 minutes from same IP
+    if (!isAdmin) {
+        const twoMinutesAgo = new Date(Date.now() - 2 * 60 * 1000).toISOString();
+        const { count, error: countError } = await supabase
+            .from("comments")
+            .select("*", { count: 'exact', head: true })
+            .eq("ip_address", ip)
+            .gte("created_at", twoMinutesAgo);
+
+        if (countError) {
+            console.error("Rate limit check failed:", countError);
+            // Proceed cautiously or fail safe? Let's proceed but log it.
+        } else if (count !== null && count >= 3) {
+            return { error: "도배 방지를 위해 잠시 후에 작성해주세요." };
+        }
+    }
 
     if (!isAdmin) {
         const { data: existingUser } = await supabase

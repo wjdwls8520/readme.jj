@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { formatDistanceToNow, format, differenceInHours } from "date-fns";
 import { ko } from "date-fns/locale";
-import { MessageSquare, Trash2, Monitor, Cpu } from "lucide-react";
+import { MessageSquare, Trash2, Monitor, Cpu, ShieldCheck } from "lucide-react";
 import { CommentForm } from "./CommentForm";
 import { deleteComment } from "@/actions/comments";
 import { cn } from "@/lib/utils";
@@ -56,6 +56,7 @@ export function CommentItem({ comment, projectSlug, isReply = false, onDataChang
     const [isDeleting, setIsDeleting] = useState(false);
 
     const isDeleted = comment.is_deleted; // Check soft delete flag
+    const isAdminComment = comment.nickname === "개발자 김정진";
 
     const replyParentId = isReply ? comment.parent_id : comment.id;
     const replyInitialContent = `@${comment.nickname}`;
@@ -103,9 +104,17 @@ export function CommentItem({ comment, projectSlug, isReply = false, onDataChang
                 </div>
             ) : (
                 <div className={cn("group relative rounded-xl border border-transparent hover:border-gray-100 hover:bg-white hover:shadow-sm p-4 transition-all duration-300", isReply && "ml-4 md:ml-8 border-l-2 border-l-gray-100 pl-4 bg-transparent hover:bg-transparent")}>
-                    <div className="mb-2 flex items-center justify-between">
+                    <div className="mb-2 flex flex-col md:flex-row md:items-center md:justify-between gap-1 md:gap-0">
                         <div className="flex items-center gap-2">
-                            <span className="font-bold text-gray-800 text-sm">{comment.nickname}</span>
+                            <span className="font-bold text-gray-800 text-sm flex items-center gap-1">
+                                {comment.nickname}
+                                {isAdminComment && (
+                                    <span className="flex-shrink-0 flex items-center gap-0.5 bg-primary/10 text-primary text-[10px] px-1.5 py-0.5 rounded-full font-bold border border-primary/20">
+                                        <ShieldCheck className="w-3 h-3" />
+                                        ADMIN
+                                    </span>
+                                )}
+                            </span>
                             <span className="text-[10px] text-gray-400 hidden md:inline-flex items-center gap-1 bg-gray-50 px-1.5 py-0.5 rounded">
                                 <Monitor className="h-3 w-3" /> {comment.os || 'Unk'}
                             </span>

@@ -65,6 +65,7 @@ export function CommentForm({ projectSlug, parentId, initialContent = "", onSucc
                     name="nickname"
                     placeholder="닉네임"
                     required={!isAdmin}
+                    maxLength={10}
                     defaultValue={isAdmin ? "개발자 김정진" : ""} // Dummy value for admin, overrides in server
                     autoComplete="username"
                     className="w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary transition-all shadow-sm"
@@ -84,7 +85,7 @@ export function CommentForm({ projectSlug, parentId, initialContent = "", onSucc
                 {/* Backdrop for highlighting */}
                 <div
                     aria-hidden="true"
-                    className="absolute inset-0 w-full rounded-md px-3 py-2 text-sm pointer-events-none whitespace-pre-wrap break-words font-sans bg-white border border-transparent"
+                    className="absolute inset-0 w-full rounded-md px-3 py-2 text-sm pointer-events-none whitespace-pre-wrap break-words font-sans bg-white border border-transparent pb-6"
                 >
                     {hasValidMention ? (
                         <>
@@ -101,16 +102,24 @@ export function CommentForm({ projectSlug, parentId, initialContent = "", onSucc
                 <textarea
                     name="content"
                     value={content}
-                    onChange={(e) => setContent(e.target.value)}
+                    onChange={(e) => {
+                        if (e.target.value.length <= 300) {
+                            setContent(e.target.value);
+                        }
+                    }}
                     placeholder="" /* Placeholder handled by backdrop */
                     required
                     rows={3}
                     className={cn(
-                        "relative z-10 w-full rounded-md border border-gray-200 bg-transparent px-3 py-2 text-sm font-sans focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary transition-all shadow-sm resize-none text-transparent caret-gray-900 selection:bg-primary/20",
+                        "relative z-10 w-full rounded-md border border-gray-200 bg-transparent px-3 py-2 text-sm font-sans focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary transition-all shadow-sm resize-none text-transparent caret-gray-900 selection:bg-primary/20 pb-6",
                         // Note: text-transparent hides the actual text input, but caret remains visible.
                         // Selection background should still be visible.
                     )}
                 />
+                {/* Character Counter */}
+                <div className="absolute bottom-2 right-2 z-20 text-[10px] font-medium text-gray-400 pointer-events-none bg-white/80 px-1 rounded">
+                    {content.length}/300
+                </div>
             </div>
             {error && <p className="text-xs text-red-500 font-medium">{error}</p>}
             <div className="flex justify-end gap-2">
