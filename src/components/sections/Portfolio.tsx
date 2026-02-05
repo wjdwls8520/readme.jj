@@ -12,7 +12,9 @@ export function Portfolio() {
             thumbnail: "/images/pine-thumb.png",
             description: "k-문화를 알리는 커뮤니티 사이트. JSP와 Spring Boot, MYSQL을 활용하여 구현했습니다.",
             url: "http://3.35.102.140.nip.io:8070/", // Add your URL here
+            pdf: "/K-문화 커뮤니티 사이트 - Pine.pdf",
             isNew: true,
+            isOpen: false, // AWS 무료기간 종료로 운영중지
             commentSection: <CommentList projectSlug="pine" />
         },
         {
@@ -26,6 +28,7 @@ export function Portfolio() {
             url: "http://3.38.18.208/", // Add your URL here
             pdf: "/중고거래플랫폼_JIMBIM.pdf",
             isNew: true,
+            isOpen: false, // AWS 무료기간 종료로 운영중지
             commentSection: <CommentList projectSlug="Jimbim" />
         },
         {
@@ -38,6 +41,7 @@ export function Portfolio() {
             description: "내가 원하는대로 직접 만드는 메타버스 vr 가상전시관.",
             url: "https://www.xrhub.co.kr/index.html", // Add your URL here
             isNew: true,
+            isOpen: true, // 현재 운영중
             commentSection: <CommentList projectSlug="XRhub" />
         },
         {
@@ -49,6 +53,7 @@ export function Portfolio() {
             thumbnail: "/images/korail-thumb.gif",
             description: "코레일의 서울역을 메타버스로 구현한 가상 전시관",
             url: "https://ksmart.myds.me/korail_vr/vtour/", // Add your URL here
+            isOpen: true, // 현재 운영중
             commentSection: <CommentList projectSlug="korail" />
         },
         {
@@ -60,6 +65,7 @@ export function Portfolio() {
             thumbnail: "/images/hw-thumb.png",
             description: "vr로 구현한 현대위아 제품을 소개하는 가상 전시관",
             url: "https://virtual-autoparts.hyundai-wia.com/vr/index.html", // Add your URL here
+            isOpen: true, // 현재 운영중
             commentSection: <CommentList projectSlug="hyundai-wia" />
         },
         {
@@ -71,6 +77,7 @@ export function Portfolio() {
             thumbnail: "/images/lgensol-thumb.png",
             description: "LG 에너지솔루션의 실제 코엑스 전시관과, 다양한 미래산업 제품들을 전시한 가상 전시관",
             url: "https://virtual.lgensol.com/index.html", // Add your URL here
+            isOpen: true, // 현재 운영중
             commentSection: <CommentList projectSlug="lgensol" />
         },
         {
@@ -82,6 +89,7 @@ export function Portfolio() {
             thumbnail: "/images/doosan-thumb.gif",
             description: "두산의 역사를 전시한 vr 가상 박물관.",
             url: "https://www.doosanheritage1896.com/doosan_vr/doosan2/index.html", // Add your URL here
+            isOpen: true, // 현재 운영중
             commentSection: <CommentList projectSlug="doosan" />
         },
         {
@@ -93,6 +101,7 @@ export function Portfolio() {
             thumbnail: "/images/posco-thumb.png",
             description: "포스코의 실제 전시 행사를 vr로 구현한 가상 전시관",
             url: "http://product.posco.com/posco2/index.html", // Add your URL here
+            isOpen: true, // 현재 운영중
             commentSection: <CommentList projectSlug="posco" />
         },
 

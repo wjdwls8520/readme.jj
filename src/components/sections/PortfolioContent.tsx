@@ -17,6 +17,7 @@ export interface ProjectItem {
     thumbnail?: string;
     pdf?: string;
     isNew?: boolean;
+    isOpen?: boolean; // 운영 상태 (true: 운영중, false: 운영중지)
     commentSection: React.ReactNode;
 }
 
@@ -105,9 +106,10 @@ function ProjectCard({ project }: { project: ProjectItem }) {
 
     return (
         <article className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow duration-300 animate-in fade-in slide-in-from-bottom-4 relative">
-            {/* New Badge - Cute & Soft Design */}
-            {project.isNew && (
-                <div className="absolute top-5 left-5 z-20">
+            {/* Badges Container - NEW 뱃지와 운영상태 뱃지 */}
+            <div className="absolute top-5 left-5 z-20 flex items-center gap-2">
+                {/* New Badge - Cute & Soft Design */}
+                {project.isNew && (
                     <span className="relative flex items-center gap-2 px-4 py-2 rounded-full bg-white/90 backdrop-blur-md shadow-sm border border-white/50 transition-transform duration-500 hover:scale-105 group-hover:-rotate-6">
                         <span className="relative flex h-2.5 w-2.5">
                             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
@@ -117,8 +119,34 @@ function ProjectCard({ project }: { project: ProjectItem }) {
                             new
                         </span>
                     </span>
-                </div>
-            )}
+                )}
+
+                {/* Operation Status Badge - onair/offline */}
+                {project.isOpen !== undefined && (
+                    <span
+                        className={cn(
+                            "relative flex items-center gap-2 px-4 py-2 rounded-full backdrop-blur-md shadow-sm border pointer-events-none",
+                            project.isOpen
+                                ? "bg-emerald-50/90 border-emerald-200/50 text-emerald-700"
+                                : "bg-gray-50/90 border-gray-200/50 text-gray-500"
+                        )}
+                    >
+                        <span className="relative flex h-2.5 w-2.5">
+                            {project.isOpen ? (
+                                <>
+                                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75"></span>
+                                    <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+                                </>
+                            ) : (
+                                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-gray-400"></span>
+                            )}
+                        </span>
+                        <span className="font-sans font-bold text-xs lowercase tracking-tight relative -top-[1px]">
+                            {project.isOpen ? "ON AIR" : "OFFLINE"}
+                        </span>
+                    </span>
+                )}
+            </div>
 
             <div className="h-72 bg-gray-100 relative group overflow-hidden flex items-center justify-center">
                 {project.thumbnail ? (
@@ -156,17 +184,28 @@ function ProjectCard({ project }: { project: ProjectItem }) {
                     <div className="flex flex-wrap items-center gap-2 md:gap-3">
                         <span className="px-3 py-1 bg-soft/20 text-secondary text-xs font-bold rounded-full uppercase tracking-wide whitespace-nowrap">{project.tag}</span>
 
-                        {/* Website Button */}
+                        {/* Website Button - isOpen 상태에 따라 비활성화 */}
                         {project.url && (
-                            <a
-                                href={project.url}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="px-4 py-1.5 bg-gray-900 text-white text-xs font-bold rounded-full hover:bg-black transition-colors flex items-center gap-1 whitespace-nowrap"
-                            >
-                                Visit Website
-                                <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
-                            </a>
+                            project.isOpen === false ? (
+                                <button
+                                    disabled
+                                    className="px-4 py-1.5 bg-gray-300 text-gray-400 text-xs font-bold rounded-full cursor-not-allowed opacity-50 flex items-center gap-1 whitespace-nowrap"
+                                    title="현재 운영중이지 않습니다"
+                                >
+                                    Visit Website
+                                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                                </button>
+                            ) : (
+                                <a
+                                    href={project.url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="px-4 py-1.5 bg-gray-900 text-white text-xs font-bold rounded-full hover:bg-black transition-colors flex items-center gap-1 whitespace-nowrap"
+                                >
+                                    Visit Website
+                                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                                </a>
+                            )
                         )}
 
                         {/* PDF Button */}
