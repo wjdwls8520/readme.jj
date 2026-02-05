@@ -23,7 +23,7 @@ export function Portfolio() {
             title: "Jimbim",
             category: "Backend (Fullstack)",
             tag: "PC Web",
-            thumbnail: "/images/jimbim-thumb.png",
+            thumbnail: "/images/jimbim.gif",
             description: "'짐을 비우다.' 중고거래 플랫폼을 구현했습니다. Spring Boot와 React, MYSQL, Postgresql을 활용하여 구현했으며, ec2 docker를 활용하여 배포했습니다. 또한 웹소켓을 활용한 채팅기능을 추가하여 실시간 거래와 GPT 토큰을 활용한 챗봇기능을 제공합니다.",
             url: "http://3.38.18.208/", // Add your URL here
             pdf: "/중고거래플랫폼_JIMBIM.pdf",
