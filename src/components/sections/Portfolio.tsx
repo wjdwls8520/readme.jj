@@ -4,20 +4,6 @@ import { PortfolioContent, ProjectItem } from "./PortfolioContent";
 export function Portfolio() {
     const projects: ProjectItem[] = [
         {
-            id: "pine",
-            slug: "pine",
-            title: "PINE",
-            category: "Backend (Fullstack)",
-            tag: "PC Web",
-            thumbnail: "/images/pine-thumb.png",
-            description: "k-문화를 알리는 커뮤니티 사이트. JSP와 Spring Boot, MYSQL을 활용하여 구현했습니다.",
-            url: "http://3.35.102.140.nip.io:8070/", // Add your URL here
-            pdf: "/K-문화 커뮤니티 사이트 - Pine.pdf",
-            isNew: true,
-            isOpen: false, // AWS 무료기간 종료로 운영중지
-            commentSection: <CommentList projectSlug="pine" />
-        },
-        {
             id: "Jimbim",
             slug: "Jimbim",
             title: "Jimbim",
@@ -30,6 +16,20 @@ export function Portfolio() {
             isNew: true,
             isOpen: false, // AWS 무료기간 종료로 운영중지
             commentSection: <CommentList projectSlug="Jimbim" />
+        },
+        {
+            id: "pine",
+            slug: "pine",
+            title: "PINE",
+            category: "Backend (Fullstack)",
+            tag: "PC Web",
+            thumbnail: "/images/pine-thumb.png",
+            description: "k-문화를 알리는 커뮤니티 사이트. JSP와 Spring Boot, MYSQL을 활용하여 구현했습니다.",
+            url: "http://3.35.102.140.nip.io:8070/", // Add your URL here
+            pdf: "/K-문화 커뮤니티 사이트 - Pine.pdf",
+            isNew: true,
+            isOpen: false, // AWS 무료기간 종료로 운영중지
+            commentSection: <CommentList projectSlug="pine" />
         },
         {
             id: "XRhub",
