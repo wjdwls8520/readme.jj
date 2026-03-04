@@ -4,6 +4,20 @@ import { PortfolioContent, ProjectItem } from "./PortfolioContent";
 export function Portfolio() {
     const projects: ProjectItem[] = [
         {
+            id: "MiniCrew",
+            slug: "MiniCrew",
+            title: "[AI 활용] MiniCrew",
+            category: "Backend (Fullstack)",
+            tag: "PC/M Responsive Web",
+            thumbnail: "/images/jimbim.gif",
+            description: "미니크루는 간단한 워크플로우를 관리하는 웹사이트 입니다. 이 프로젝트는 Only VibeCoding으로 개발 했으면 Gemini(기획/설계), Antigravity(마크업/디자인), CODEX 5.3(Next.js 서버 로직/Supabase)을 적재적소에 활요헀습니다. 단순한 도구 활용을 넘어, AI가 실무 수준의 복잡한 요구사항을 어디까지 소화할 수 있을지 판단하기 위해 1인 개발을 진행했습니다.",
+            url: "https://mini-crew.vercel.app", // Add your URL here
+            pdf: "/MiniCrew.pdf",
+            isNew: true,
+            isOpen: true,
+            commentSection: <CommentList projectSlug="MiniCrew" />
+        },
+        {
             id: "Jimbim",
             slug: "Jimbim",
             title: "Jimbim",
